@@ -90,6 +90,20 @@ app.get("/", (req, res) => {
     res.redirect("/listings");
 });
 
+app.get("/debug-listings", async (req, res) => {
+    const listings = await mongoose.connection.db
+        .collection("listings")
+        .find({})
+        .toArray();
+
+    res.json({
+        database: mongoose.connection.db.databaseName,
+        collection: "listings",
+        count: listings.length,
+        first: listings[0]
+    });
+});
+
 app.get("/test-db", async (req, res) => {
     const count = await mongoose.connection.db
         .collection("listings")
