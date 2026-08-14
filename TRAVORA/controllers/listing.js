@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Listing = require("../models/listing.js");
 
 // Builds a mongo filter object from query params shared by index + search
@@ -36,18 +37,17 @@ function buildSort(sort) {
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
 
-    console.log("LISTINGS FOUND:", allListings.length);
+    console.log("========== LISTING DEBUG ==========");
+    console.log("Database:", mongoose.connection.db.databaseName);
+    console.log("Collection:", Listing.collection.name);
+    console.log("Listings found:", allListings.length);
+    console.log("===================================");
 
-    let wishlistIds = [];
-    if (req.user) {
-        wishlistIds = req.user.wishlist.map((id) => id.toString());
-    }
-
-    res.render("listings/index.ejs", {
-        allListings,
-        wishlistIds,
-        query: {},
-    });
+    res.send(`
+        Database: ${mongoose.connection.db.databaseName}<br>
+        Collection: ${Listing.collection.name}<br>
+        Listings found: ${allListings.length}
+    `);
 };
 
 module.exports.search = async (req, res) => {
