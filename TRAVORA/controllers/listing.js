@@ -1,7 +1,5 @@
-const mongoose = require("mongoose");
 const Listing = require("../models/listing.js");
 
-// Builds a mongo filter object from query params shared by index + search
 function buildFilter(query) {
     let { category, q, minPrice, maxPrice } = query;
     let filter = {};
@@ -20,8 +18,14 @@ function buildFilter(query) {
 
     if (minPrice || maxPrice) {
         filter.price = {};
-        if (minPrice) filter.price.$gte = Number(minPrice);
-        if (maxPrice) filter.price.$lte = Number(maxPrice);
+
+        if (minPrice) {
+            filter.price.$gte = Number(minPrice);
+        }
+
+        if (maxPrice) {
+            filter.price.$lte = Number(maxPrice);
+        }
     }
 
     return filter;
@@ -34,7 +38,6 @@ function buildSort(sort) {
     return {};
 }
 
-const mongoose = require("mongoose");
 const Listing = require("../models/listing.js");
 
 module.exports.index = async (req, res) => {
