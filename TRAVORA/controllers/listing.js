@@ -46,22 +46,14 @@ module.exports.index = async (req, res) => {
     console.log("Listings found:", allListings.length);
     console.log("===================================");
 
-    res.send(`
-        Database: ${mongoose.connection.db.databaseName}<br>
-        Collection: ${Listing.collection.name}<br>
-        Listings found: ${allListings.length}
-    `);
-};
-
-module.exports.search = async (req, res) => {
-    let filter = buildFilter(req.query);
-    let sort = buildSort(req.query.sort);
-
-    let allListings = await Listing.find(filter)
-        .sort(sort)
-        .populate({ path: "reviews", select: "rating" });
+module.exports.index = async (req, res) => {
+    const allListings = await Listing.db
+        .collection("listings")
+        .find({})
+        .toArray();
 
     let wishlistIds = [];
+
     if (req.user) {
         wishlistIds = req.user.wishlist.map((id) => id.toString());
     }
