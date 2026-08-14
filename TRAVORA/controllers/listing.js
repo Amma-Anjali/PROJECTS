@@ -46,19 +46,28 @@ module.exports.index = async (req, res) => {
     console.log("Listings found:", allListings.length);
     console.log("===================================");
 
+const Listing = require("../models/listing.js");
+
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
+    const db = Listing.db;
+
+    const allListings = await db
+        .collection("listings")
+        .find({})
+        .toArray();
+
+    console.log("LISTINGS:", allListings.length);
 
     let wishlistIds = [];
 
     if (req.user) {
-        wishlistIds = req.user.wishlist.map((id) => id.toString());
+        wishlistIds = req.user.wishlist.map(id => id.toString());
     }
 
     res.render("listings/index.ejs", {
         allListings,
         wishlistIds,
-        query: req.query,
+        query: req.query
     });
 };
 
