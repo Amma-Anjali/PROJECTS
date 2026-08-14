@@ -22,7 +22,7 @@ const userRouter = require("./routes/user.js");
 const wishlistRouter = require("./routes/wishlist.js");
 const bookingRouter = require("./routes/booking.js");
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/Travora";
+const MONGO_URL = process.env.MONGO_URL;
 
 main()
     .then(() => {
@@ -34,7 +34,7 @@ main()
 
 async function main() {
     await mongoose.connect(MONGO_URL);
-};
+}
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
