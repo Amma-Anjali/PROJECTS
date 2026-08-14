@@ -47,10 +47,7 @@ module.exports.index = async (req, res) => {
     console.log("===================================");
 
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.db
-        .collection("listings")
-        .find({})
-        .toArray();
+    const allListings = await Listing.find({});
 
     let wishlistIds = [];
 
