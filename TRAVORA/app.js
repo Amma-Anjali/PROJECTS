@@ -89,6 +89,14 @@ app.use("/", userRouter);
 app.get("/", (req, res) => {
     res.redirect("/listings");
 });
+
+app.get("/test-db", async (req, res) => {
+    const count = await mongoose.connection.db
+        .collection("listings")
+        .countDocuments();
+
+    res.send(`Listings in database: ${count}`);
+});
 // if path doesn't exists (placed at the end of all routes otherwise it will block valid routes.)
 app.use((req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
