@@ -34,12 +34,9 @@ function buildSort(sort) {
 }
 
 module.exports.index = async (req, res) => {
-    let filter = buildFilter(req.query);
-    let sort = buildSort(req.query.sort);
+    const allListings = await Listing.find({});
 
-    let allListings = await Listing.find(filter)
-        .sort(sort)
-        .populate({ path: "reviews", select: "rating" });
+    console.log("LISTINGS FOUND:", allListings.length);
 
     let wishlistIds = [];
     if (req.user) {
@@ -49,7 +46,7 @@ module.exports.index = async (req, res) => {
     res.render("listings/index.ejs", {
         allListings,
         wishlistIds,
-        query: req.query,
+        query: {},
     });
 };
 
