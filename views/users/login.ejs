@@ -1,0 +1,48 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="auth-bg"
+     style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');">
+</div>
+
+<div class="auth-wrapper">
+
+    <div class="auth-blob auth-blob-1"></div>
+    <div class="auth-blob auth-blob-2"></div>
+
+    <div class="auth-card auth-card-glass">
+
+        <h1>Welcome Back</h1>
+        <p class="auth-subtext">Log in to manage your stays and bookings.</p>
+
+        <form action="/login" method="POST" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label"> Username </label>
+                <input
+                    name="username"
+                    id="username"
+                    type="text"
+                    class="form-control glass-input"
+                    required
+                />
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label"> Password </label>
+                <input
+                    name="password"
+                    id="password"
+                    type="password"
+                    class="form-control glass-input"
+                    required
+                />
+            </div>
+            <button class="btn add-btn shine-btn w-100">Login</button>
+        </form>
+
+        <p class="auth-switch">
+            New to Travora? <a href="/signup">Create an account</a>
+        </p>
+
+    </div>
+
+</div>

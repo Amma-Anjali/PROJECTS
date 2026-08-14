@@ -1,0 +1,195 @@
+<% layout("/layouts/boilerplate")%> 
+<style>
+    #filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    .filter {
+        text-align: center;
+        margin-right: 2rem;
+        margin-top : 2rem;
+        opacity: 0.7;
+        text-decoration: none;
+        color: black;
+    }
+    .filter:hover{
+        opacity: 1;
+        cursor: pointer;
+    }
+    .filter p {
+        font-size : 0.8rem;
+    }
+    .filter.active {
+        opacity: 1;
+        background: rgba(255,255,255,0.95);
+        border-color: rgba(232,137,62,0.4);
+        box-shadow: var(--shadow-soft);
+    }
+    .tax-info {
+        display: none;
+    }
+    .tax-toggle {
+        border : 1px solid black;
+        border-radius: 1rem;
+        height : 3.25rem;
+        padding : 1rem;
+        display: flex;
+        align-items: center;
+    }
+</style>
+
+<% if(!query.category && !query.q) { %>
+<div class="hero">
+    <h1>Find your next stay</h1>
+    <p>Handpicked homes, cabins and castles around the world &mdash; book a stay that feels like an adventure.</p>
+</div>
+<% } %>
+
+<form id="advanced-filters" class="row gx-2 gy-2 align-items-end mb-2" method="GET" action="<%= query.q ? '/listings/search' : '/listings' %>">
+    <% if(query.q) { %><input type="hidden" name="q" value="<%= query.q %>"><% } %>
+    <% if(query.category) { %><input type="hidden" name="category" value="<%= query.category %>"><% } %>
+
+    <div class="col-auto">
+        <label class="form-label mb-0">Min price (&#8377;)</label>
+        <input type="number" name="minPrice" value="<%= query.minPrice || '' %>" placeholder="0" class="form-control" style="width: 9rem;">
+    </div>
+    <div class="col-auto">
+        <label class="form-label mb-0">Max price (&#8377;)</label>
+        <input type="number" name="maxPrice" value="<%= query.maxPrice || '' %>" placeholder="Any" class="form-control" style="width: 9rem;">
+    </div>
+    <div class="col-auto">
+        <label class="form-label mb-0">Sort by</label>
+        <select name="sort" class="form-select" style="width: 11rem;">
+            <option value="" <%= !query.sort ? "selected" : "" %>>Recommended</option>
+            <option value="newest" <%= query.sort === "newest" ? "selected" : "" %>>Newest</option>
+            <option value="price_asc" <%= query.sort === "price_asc" ? "selected" : "" %>>Price: Low to High</option>
+            <option value="price_desc" <%= query.sort === "price_desc" ? "selected" : "" %>>Price: High to Low</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <button class="btn add-btn" type="submit">Apply</button>
+    </div>
+</form>
+
+<div id="filters">
+    <a href="/listings?category=Trending" class="filter <%= query.category === 'Trending' ? 'active' : '' %>">
+    <div><i class="fa-solid fa-mountain"></i></div>
+    <p>Trending</p>
+    </a>
+
+    <a href="/listings?category=Rooms" class="filter <%= query.category === 'Rooms' ? 'active' : '' %>">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Rooms</p>
+    </a>
+    
+    <a href="/listings?category=Iconic Cities" class="filter <%= query.category === 'Iconic Cities' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <p>Iconic Cities</p>
+    </a>
+
+    <a href="/listings?category=Mountains" class="filter <%= query.category === 'Mountains' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-mountain"></i></div>
+        <p>Mountains</p>
+    </a>
+
+    <a href="/listings?category=Castles" class="filter <%= query.category === 'Castles' ? 'active' : '' %>">
+        <div><i class="fa-brands fa-fort-awesome"></i></div>
+        <p>Castles</p>
+    </a>
+
+    <a href="/listings?category=Pools" class="filter <%= query.category === 'Pools' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-person-swimming"></i></div>
+        <p>Amazon pools</p>
+    </a>
+    <a href="/listings?category=Camping" class="filter <%= query.category === 'Camping' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-campground"></i></div>
+        <p>Camping</p>
+    </a>
+    <a href="/listings?category=Farms" class="filter <%= query.category === 'Farms' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-cow"></i></div>
+        <p>Farms</p>
+    </a>
+    <a href="/listings?category=Arctic" class="filter <%= query.category === 'Arctic' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-snowflake"></i></div>
+        <p>Arctic</p>
+    </a>
+    <a href="/listings?category=Domes" class="filter <%= query.category === 'Domes' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-igloo"></i></div>
+        <p>Domes</p>
+    </a>
+    <% if(query.category || query.q || query.minPrice || query.maxPrice) { %>
+    <a href="/listings" class="filter">
+        <div><i class="fa-solid fa-xmark"></i></div>
+        <p>Clear</p>
+    </a>
+    <% } %>
+    <div class="tax-toggle">
+        <div class="form-check-reverse form-switch">
+            <input class="form-check-input" 
+                   type="checkbox" 
+                   role="switch" 
+                   id="switchCheckDefault">
+
+            <label class="form-check-label" for="switchCheckDefault">
+                Display Total After Taxes
+            </label>
+        </div>
+    </div>
+
+</div>
+
+<% if(allListings.length === 0) { %>
+    <div class="text-center my-5">
+        <h4>No stays match those filters</h4>
+        <p class="text-muted">Try widening your search or clearing filters.</p>
+    </div>
+<% } %>
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for(let listing of allListings) {%>
+        <div class="col">
+        <div class="card listing-card position-relative">
+            <% if(currUser) { %>
+                <form action="/listings/<%= listing._id %>/wishlist" method="POST" class="wishlist-form">
+                    <button type="submit" class="wishlist-btn <%= wishlistIds.includes(listing._id.toString()) ? 'active' : '' %>" aria-label="Save to wishlist">
+                        <i class="<%= wishlistIds.includes(listing._id.toString()) ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
+                    </button>
+                </form>
+            <% } %>
+            <a href="/listings/<%= listing._id%>" class="listing-link">
+                <img src="<%= listing.image.url %>" 
+                    class="card-img-top" 
+                    alt="listing_image" 
+                >
+                <div class="card-img-overlay"></div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <b><%= listing.title %></b>
+                        <% if(listing.averageRating > 0) { %>
+                            <span class="rating-badge"><i class="fa-solid fa-star"></i> <%= listing.averageRating %></span>
+                        <% } %>
+                        <br/>
+                        &#8377; <%= listing.price.toLocaleString("en-IN")%> / night
+                        <i class="tax-info"> &nbsp; &nbsp;+18% GST</i>
+                    </p>
+                </div>
+            </a>
+        </div>
+        </div>
+    <%}%>
+</div>
+
+<script>
+    let taxSwitch = document.getElementById("switchCheckDefault");
+    taxSwitch.addEventListener("click", () => {
+        let taxInfo = document.getElementsByClassName("tax-info");
+        for(let info of taxInfo){
+            if(info.style.display != "inline"){
+                info.style.display = "inline";
+            }else{
+                info.style.display = "none";
+            }
+        }
+    })
+</script>

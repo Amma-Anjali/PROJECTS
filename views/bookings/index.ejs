@@ -1,0 +1,58 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <h3><i class="fa-regular fa-calendar-check"></i> My Trips</h3>
+    </div>
+</div>
+
+<% if(!bookings || bookings.length === 0) { %>
+    <div class="text-center my-5">
+        <h5>No trips booked yet</h5>
+        <p class="text-muted">When you book a stay, it'll show up here.</p>
+        <a href="/listings" class="btn add-btn mt-2">Find a stay</a>
+    </div>
+<% } else { %>
+<div class="row row-cols-lg-2 row-cols-sm-1 mt-3">
+    <% for(let booking of bookings) { %>
+        <div class="col">
+            <div class="card listing-card mb-3 <%= booking.status === 'cancelled' ? 'trip-cancelled' : '' %>">
+                <div class="row g-0">
+                    <div class="col-4">
+                        <% if(booking.listing) { %>
+                        <img src="<%= booking.listing.image.url %>" class="h-100 w-100" style="object-fit:cover; border-radius: 28px 0 0 28px;" alt="listing">
+                        <% } %>
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <% if(booking.listing) { %>
+                                    <a href="/listings/<%= booking.listing._id %>" class="text-decoration-none"><%= booking.listing.title %></a>
+                                <% } else { %>
+                                    Listing removed
+                                <% } %>
+                            </h5>
+                            <p class="card-text mb-1">
+                                <i class="fa-regular fa-calendar"></i>
+                                <%= booking.checkIn.toDateString() %> &rarr; <%= booking.checkOut.toDateString() %>
+                            </p>
+                            <p class="card-text mb-1"><%= booking.nights %> night<%= booking.nights > 1 ? "s" : "" %> &middot; <%= booking.guests %> guest<%= booking.guests > 1 ? "s" : "" %></p>
+                            <p class="card-text mb-2"><b>&#8377; <%= booking.totalPrice.toLocaleString("en-IN") %></b> total</p>
+
+                            <% if(booking.status === "cancelled") { %>
+                                <span class="badge text-bg-secondary">Cancelled</span>
+                            <% } else { %>
+                                <span class="badge text-bg-success mb-2">Confirmed</span>
+                                <br>
+                                <form method="POST" action="/trips/<%= booking._id %>?_method=DELETE" class="mt-2">
+                                    <button class="btn btn-sm btn-dark add-btn">Cancel trip</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+</div>
+<% } %>

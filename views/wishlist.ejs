@@ -1,0 +1,46 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <h3><i class="fa-solid fa-heart" style="color:#ff6fb8;"></i> Your Wishlist</h3>
+    </div>
+</div>
+
+<% if(!allListings || allListings.length === 0) { %>
+    <div class="text-center my-5">
+        <h5>Nothing saved yet</h5>
+        <p class="text-muted">Tap the heart on any stay to save it here for later.</p>
+        <a href="/listings" class="btn add-btn mt-2">Explore stays</a>
+    </div>
+<% } else { %>
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for(let listing of allListings) {%>
+        <div class="col">
+        <div class="card listing-card position-relative">
+            <form action="/listings/<%= listing._id %>/wishlist" method="POST">
+                <button type="submit" class="wishlist-btn active" aria-label="Remove from wishlist">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+            </form>
+            <a href="/listings/<%= listing._id%>" class="listing-link">
+                <img src="<%= listing.image.url %>" 
+                    class="card-img-top" 
+                    alt="listing_image" 
+                >
+                <div class="card-img-overlay"></div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <b><%= listing.title %></b>
+                        <% if(listing.averageRating > 0) { %>
+                            <span class="rating-badge"><i class="fa-solid fa-star"></i> <%= listing.averageRating %></span>
+                        <% } %>
+                        <br/>
+                        &#8377; <%= listing.price.toLocaleString("en-IN")%> / night
+                    </p>
+                </div>
+            </a>
+        </div>
+        </div>
+    <%}%>
+</div>
+<% } %>

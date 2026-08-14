@@ -1,0 +1,60 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="auth-bg"
+     style="background-image:url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1920&q=80');">
+</div>
+
+<div class="auth-wrapper">
+
+    <div class="auth-blob auth-blob-1"></div>
+    <div class="auth-blob auth-blob-2"></div>
+
+    <div class="auth-card auth-card-glass">
+
+        <h1>Join Travora</h1>
+        <p class="auth-subtext">Create an account to start booking and hosting.</p>
+
+        <form action="/signup" method="POST" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label"> Username </label>
+                <input
+                    name="username"
+                    id="username"
+                    type="text"
+                    class="form-control glass-input"
+                    required
+                    />
+                <div class="valid-feedback">looks good!</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label"> Email </label>
+                <input
+                    name="email"
+                    id="email"
+                    type="email"
+                    class="form-control glass-input"
+                    required
+                    />
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label"> Password </label>
+                <input
+                    name="password"
+                    id="password"
+                    type="password"
+                    class="form-control glass-input"
+                    required
+                />
+            </div>
+            <button class="btn add-btn shine-btn w-100">Sign Up</button>
+        </form>
+
+        <p class="auth-switch">
+            Already have an account? <a href="/login">Log in</a>
+        </p>
+
+    </div>
+
+</div>
