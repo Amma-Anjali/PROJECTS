@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlavorNest – Global Kitchen</title>
+
+  <!-- Google Fonts: Cormorant Garamond (display) + Poppins (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-mark">✦</span>
+        <span>Flavor<em>Nest</em></span>
+        <span class="logo-sub">Global Kitchen</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#cultures"  class="nav-link">Cultures</a></li>
+        <li><a href="#trending"  class="nav-link">Trending</a></li>
+        <li><a href="#featured"  class="nav-link">Featured</a></li>
+        <li><a href="#ai-chef"   class="nav-link">AI Chef</a></li>
+        <li><a href="#planner"   class="nav-link">Meal Planner</a></li>
+        <li><a href="orders.html" class="nav-link">My Orders</a></li>
+        <li><a href="my-recipes.html" class="nav-link">My Recipes</a></li>
+        <li>
+          <button class="nav-fav-btn" id="cartNavBtn" aria-label="Cart">
+            <span class="heart-icon">🛒</span>
+            <span>Cart</span>
+            <span class="fav-badge" id="cartBadge">0</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-fav-btn" id="favNavBtn" aria-label="Favorites">
+            <span class="heart-icon">♥</span>
+            <span>Favorites</span>
+            <span class="fav-badge" id="favBadge">0</span>
+          </button>
+        </li>
+        <li class="notif-wrap">
+          <button class="nav-fav-btn" id="notifBtn" aria-label="Notifications">
+            <span class="heart-icon">🔔</span>
+            <span class="fav-badge" id="notifBadge" style="display:none;">0</span>
+          </button>
+          <div class="notif-dropdown" id="notifDropdown" style="display:none;">
+            <div class="notif-header">
+              <h4>Notifications</h4>
+              <button id="notifMarkAllRead">Mark all read</button>
+            </div>
+            <div id="notifList" class="notif-list"></div>
+          </div>
+        </li>
+        <li>
+          <button class="nav-fav-btn" id="authNavBtn" aria-label="Account">
+            <span id="authNavLabel">Log In</span>
+          </button>
+        </li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero" id="home">
+    <!-- Food collage grid in background -->
+    <div class="hero-collage" aria-hidden="true">
+      <div class="collage-cell" style="background-image:url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&q=75')"></div>
+      <div class="collage-cell" style="background-image:url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=75')"></div>
+      <div class="collage-cell" style="background-image:url('https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=75')"></div>
+      <div class="collage-cell" style="background-image:url('https://images.unsplash.com/photo-1529543544282-ea669407fca3?w=400&q=75')"></div>
+      <div class="collage-cell" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=75')"></div>
+      <div class="collage-cell" style="background-image:url('https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=75')"></div>
+    </div>
+    <!-- Dark overlay -->
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">✦ 12 Cuisines · 1 Kitchen ✦</p>
+      <h1 class="hero-heading">Explore Flavors<br /><em>from Around</em><br />the World</h1>
+      <p class="hero-body">Hand-curated recipes from every corner of the globe — authentic, approachable, unforgettable.</p>
+
+      <!-- Hero search bar -->
+      <div class="hero-search">
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search by dish, ingredient or cuisine…"
+          autocomplete="off"
+        />
+        <button class="search-btn" id="searchBtn" aria-label="Search">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Quick cuisine filters below search -->
+      <div class="hero-pills">
+        <button class="pill active" data-cuisine="">All</button>
+        <button class="pill" data-cuisine="Indian">🇮🇳 Indian</button>
+        <button class="pill" data-cuisine="Italian">🇮🇹 Italian</button>
+        <button class="pill" data-cuisine="Chinese">🇨🇳 Chinese</button>
+        <button class="pill" data-cuisine="Japanese">🇯🇵 Japanese</button>
+        <button class="pill" data-cuisine="Mexican">🇲🇽 Mexican</button>
+        <button class="pill" data-cuisine="French">🇫🇷 French</button>
+        <button class="pill" data-cuisine="Thai">🇹🇭 Thai</button>
+        <button class="pill" data-cuisine="Korean">🇰🇷 Korean</button>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <a href="#cultures" class="scroll-cue" aria-label="Scroll down">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- ═══════════════ EXPLORE BY CULTURE ═══════════════ -->
+  <section class="section" id="cultures">
+    <div class="container">
+      <div class="sec-header">
+        <p class="sec-label">Browse the World</p>
+        <h2 class="sec-title">Explore by Culture</h2>
+        <p class="sec-sub">Click any cuisine to discover its iconic dishes</p>
+      </div>
+
+      <!-- Culture facts panel - populated from GET /api/culture/:name -->
+      <div class="culture-fact-panel" id="cultureFactPanel" style="display:none;"></div>
+
+      <div class="cultures-grid">
+        <!-- Each card: flag emoji, country name, image, dish count -->
+        <div class="culture-card" data-cuisine="Indian">
+          <div class="culture-img" style="background-image:url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&q=80')"></div>
+          <div class="culture-info">
+            <span class="culture-flag">🇮🇳</span>
+            <h3>Indian</h3>
+            <p>Bold spices & rich curries</p>
+          </div>
+        </div>
+
+        <div class="culture-card" data-cuisine="Italian">
+          <div class="culture-img" style="background-image:url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500&q=80')"></div>
+          <div class="culture-info">
+            <span class="culture-flag">🇮🇹</span>
+            <h3>Italian</h3>
+            <p>Pasta, pizza & la dolce vita</p>
+          </div>
+        </div>
+
+        <div class="culture-card" data-cuisine="Chinese">
+          <div class="culture-img" style="background-image:url('https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&q=80')"></div>
+          <div class="culture-info">
+            <span class="culture-flag">🇨🇳</span>
+            <h3>Chinese</h3>
+            <p>Dim sum, stir-fries & more</p>
+          </div>
+        </div>
+
+        <div class="culture-card" data-cuisine="Mexican">
+          <div class="culture-img" style="background-image:url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=500&q=80')"></div>
+          <div class="culture-info">
+            <span class="culture-flag">🇲🇽</span>
+            <h3>Mexican</h3>
+            <p>Tacos, salsas & fiesta flavors</p>
+          </div>
+        </div>
+
+        <div class="culture-card" data-cuisine="Japanese">
+          <div class="culture-img" style="background-image:url('https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=500&q=80')"></div>
+          <div class="culture-info">
+            <span class="culture-flag">🇯🇵</span>
+            <h3>Japanese</h3>
+            <p>Sushi, ramen & umami perfection</p>
+          </div>
+        </div>
+
+        <div class="culture-card" data-cuisine="French">
+          <div class="culture-img" style="background-image:url('https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=500&q=80')"></div>
+          <div class="culture-info">
+            <span class="culture-flag">🇫🇷</span>
+            <h3>French</h3>
+            <p>Croissants, sauces & elegance</p>
+          </div>
+        </div>
+
+        <div class="culture-card" data-cuisine="Thai">
+          <div class="culture-img" style="background-image:url('https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=500&q=80')"></div>
+          <div class="culture-info">
+            <span class="culture-flag">🇹🇭</span>
+            <h3>Thai</h3>
+            <p>Sweet, sour, salty, spicy balance</p>
+          </div>
+        </div>
+
+        <div class="culture-card" data-cuisine="Korean">
+          <div class="culture-img" style="background-image:url('https://images.unsplash.com/photo-1553163147-622ab57be1c7?w=500&q=80')"></div>
+          <div class="culture-info">
+            <span class="culture-flag">🇰🇷</span>
+            <h3>Korean</h3>
+            <p>Fermentation, banchan & bold heat</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TRENDING RECIPES ═══════════════ -->
+  <section class="section recipes-section" id="trending">
+    <div class="container">
+      <div class="sec-header">
+        <p class="sec-label">This Week's Picks</p>
+        <h2 class="sec-title">Trending Recipes</h2>
+        <p class="sec-sub" id="filterLabel">Showing all recipes</p>
+      </div>
+
+      <!-- Toolbar: sort + submit -->
+      <div class="recipes-toolbar">
+        <label class="sort-label">
+          Sort by
+          <select id="sortSelect">
+            <option value="trending">🔥 Trending</option>
+            <option value="rating">⭐ Top Rated</option>
+            <option value="newest">🆕 Newest</option>
+            <option value="quickest">⏱ Quickest</option>
+          </select>
+        </label>
+        <button class="btn btn-outline" id="submitRecipeBtn">+ Submit a Recipe</button>
+      </div>
+
+      <!-- Active filter chip -->
+      <div class="filter-chip-wrap" id="filterChipWrap" style="display:none;">
+        <div class="filter-chip">
+          <span id="filterChipText"></span>
+          <button id="clearFilter" aria-label="Clear filter">✕</button>
+        </div>
+      </div>
+
+      <!-- Recipe cards — injected by JS -->
+      <div class="recipes-grid" id="recipesGrid"></div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination" style="display:none;"></div>
+
+      <!-- No results -->
+      <div class="no-results" id="noResults" style="display:none;">
+        <p class="no-results-icon">🍽</p>
+        <h3>No recipes found</h3>
+        <p>Try a different search term or cuisine filter.</p>
+        <button class="btn btn-outline" id="clearSearchBtn">Clear Search</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FEATURED RECIPE ═══════════════ -->
+  <section class="section featured-section" id="featured">
+    <div class="container">
+      <div class="sec-header">
+        <p class="sec-label">✦ Editor's Choice</p>
+        <h2 class="sec-title">Featured Dish</h2>
+      </div>
+
+      <!-- Populated by JS from the #1 trending recipe (GET /api/analytics/trending) -->
+      <div class="featured-card" id="featuredCard">
+        <p style="padding:2rem; text-align:center; opacity:.7;">Loading featured dish…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ AI CHEF ═══════════════ -->
+  <section class="section ai-section" id="ai-chef">
+    <div class="container">
+      <div class="sec-header light">
+        <p class="sec-label">✦ Smart Suggestions</p>
+        <h2 class="sec-title">AI Recipe Finder</h2>
+        <p class="sec-sub">Type ingredients you have — we'll find matching recipes instantly</p>
+      </div>
+
+      <div class="ai-box">
+        <div class="ai-input-row">
+          <input
+            type="text"
+            id="aiInput"
+            class="ai-input"
+            placeholder="e.g. rice, chicken, garlic, ginger…"
+          />
+          <button class="btn btn-gold" id="aiFindBtn">Find Recipes 🔍</button>
+        </div>
+
+        <div id="aiResults" class="ai-results" style="display:none;"></div>
+        <div id="aiEmpty"   class="ai-empty"   style="display:none;">
+          <p>😅 No matches found for those ingredients. Try something else!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ MEAL PLANNER ═══════════════ -->
+  <section class="section planner-section" id="planner">
+    <div class="container">
+      <div class="sec-header">
+        <p class="sec-label">✦ Plan Ahead</p>
+        <h2 class="sec-title">Weekly Meal Planner</h2>
+        <p class="sec-sub">Log in to build a week of meals and auto-generate a shopping list</p>
+      </div>
+
+      <div id="plannerLoggedOut" class="ai-box" style="text-align:center;">
+        <p>Log in or create a free account to plan your week and generate shopping lists.</p>
+        <button class="btn btn-gold" id="plannerLoginBtn">Log In / Sign Up</button>
+      </div>
+
+      <div id="plannerLoggedIn" style="display:none;">
+        <div class="planner-grid" id="plannerGrid"></div>
+        <div class="planner-actions">
+          <button class="btn btn-gold" id="generateListBtn">🛒 Generate Shopping List</button>
+        </div>
+        <div id="shoppingListBox" class="ai-box" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="footer" id="contact">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="logo logo-light">
+          <span class="logo-mark">✦</span>
+          <span>Flavor<em>Nest</em></span>
+          <span class="logo-sub">Global Kitchen</span>
+        </div>
+        <p>Celebrating the world's culinary diversity — one recipe at a time. From home kitchens to heritage traditions.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Instagram">📸</a>
+          <a href="#" aria-label="Pinterest">📌</a>
+          <a href="#" aria-label="YouTube">▶️</a>
+          <a href="#" aria-label="Twitter">🐦</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#cultures">World Cuisines</a></li>
+          <li><a href="#trending">Trending Recipes</a></li>
+          <li><a href="#featured">Featured Dish</a></li>
+          <li><a href="#ai-chef">AI Recipe Finder</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#" id="footerSubmitLink">Submit a Recipe</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@flavornest.com">hello@flavornest.com</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Press & Media</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 FlavorNest – Global Kitchen. All rights reserved. Made with ❤ for food lovers everywhere.</p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ RECIPE MODAL ═══════════════ -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Recipe details">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ FAVORITES DRAWER ═══════════════ -->
+  <aside class="drawer" id="favDrawer" aria-label="Favorites">
+    <div class="drawer-header">
+      <h3>♥ My Favorites</h3>
+      <button class="drawer-close" id="drawerClose">✕</button>
+    </div>
+    <div id="favList" class="fav-list"></div>
+  </aside>
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+  <!-- ═══════════════ CART DRAWER ═══════════════ -->
+  <aside class="drawer" id="cartDrawer" aria-label="Cart">
+    <div class="drawer-header">
+      <h3>🛒 Your Cart</h3>
+      <button class="drawer-close" id="cartDrawerClose">✕</button>
+    </div>
+    <div id="cartList" class="fav-list"></div>
+    <div class="cart-summary" id="cartSummary" style="display:none;">
+      <div class="cart-subtotal-row">
+        <span>Subtotal</span>
+        <strong id="cartSubtotalText">$0.00</strong>
+      </div>
+      <button class="btn btn-gold" id="checkoutBtn" style="width:100%;">Proceed to Checkout</button>
+    </div>
+  </aside>
+  <div class="drawer-backdrop" id="cartDrawerBackdrop"></div>
+
+  <!-- ═══════════════ CHECKOUT MODAL ═══════════════ -->
+  <div class="modal-overlay" id="checkoutOverlay" role="dialog" aria-modal="true" aria-label="Checkout">
+    <div class="modal modal-narrow" id="checkoutModal">
+      <button class="modal-close" id="checkoutClose" aria-label="Close">✕</button>
+      <h2 class="modal-title">Checkout</h2>
+
+      <div id="checkoutSummary" class="checkout-summary"></div>
+
+      <form id="checkoutForm" class="auth-form">
+        <input type="text" id="coName" placeholder="Full name" required />
+        <input type="tel" id="coPhone" placeholder="Phone number" required />
+        <input type="text" id="coLine1" placeholder="Delivery address" required />
+        <div class="sr-row">
+          <input type="text" id="coCity" placeholder="City" required />
+          <input type="text" id="coState" placeholder="State" />
+          <input type="text" id="coZip" placeholder="ZIP / PIN" />
+        </div>
+
+        <div id="cardElementBox" style="display:none;">
+          <div id="cardElement" class="card-element"></div>
+        </div>
+        <p class="auth-hint" id="mockPayNote" style="display:none;">
+          Test mode: payment will be simulated instantly, no card required.
+        </p>
+
+        <button type="submit" class="btn btn-gold" id="placeOrderBtn">Place Order</button>
+        <p class="auth-hint" id="checkoutStatus"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════ AUTH MODAL ═══════════════ -->
+  <div class="modal-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-label="Log in or sign up">
+    <div class="modal modal-narrow" id="authModal">
+      <button class="modal-close" id="authClose" aria-label="Close">✕</button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Log In</button>
+        <button class="auth-tab" data-tab="register">Sign Up</button>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <input type="email" id="loginEmail" placeholder="Email" required autocomplete="email" />
+        <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password" />
+        <button type="submit" class="btn btn-gold">Log In</button>
+        <button type="button" class="link-btn" id="forgotPasswordBtn">Forgot password?</button>
+        <p class="auth-hint">Demo login: demo@flavornest.com / demo1234</p>
+      </form>
+
+      <form id="registerForm" class="auth-form" style="display:none;">
+        <input type="text" id="registerName" placeholder="Full name" required />
+        <input type="email" id="registerEmail" placeholder="Email" required autocomplete="email" />
+        <input type="password" id="registerPassword" placeholder="Password (min 6 characters)" minlength="6" required autocomplete="new-password" />
+        <button type="submit" class="btn btn-gold">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SUBMIT RECIPE MODAL ═══════════════ -->
+  <div class="modal-overlay" id="submitOverlay" role="dialog" aria-modal="true" aria-label="Submit a recipe">
+    <div class="modal" id="submitModal">
+      <button class="modal-close" id="submitClose" aria-label="Close">✕</button>
+      <h2 class="modal-title">Submit a Recipe</h2>
+      <p class="modal-desc">Your recipe goes live immediately after submitting.</p>
+      <form id="submitRecipeForm" class="auth-form">
+        <input type="text" id="srTitle" placeholder="Recipe title" required />
+        <input type="text" id="srCuisine" placeholder="Cuisine (e.g. Indian, Thai...)" required />
+        <label class="sr-image-label" for="srImage">
+          <span>Recipe photo (optional)</span>
+          <input type="file" id="srImage" accept="image/png,image/jpeg,image/webp,image/gif" />
+          <img id="srImagePreview" class="sr-image-preview" alt="Preview" style="display:none;" />
+        </label>
+        <textarea id="srDescription" placeholder="Short description" required rows="2"></textarea>
+        <div class="sr-row">
+          <input type="number" id="srTime" placeholder="Time (minutes)" min="1" required />
+          <input type="number" id="srServings" placeholder="Servings" min="1" value="4" />
+          <select id="srDifficulty">
+            <option>Easy</option>
+            <option>Medium</option>
+            <option>Hard</option>
+          </select>
+        </div>
+        <textarea id="srIngredients" placeholder="One ingredient per line, e.g.&#10;200 g chicken&#10;2 whole garlic cloves" required rows="4"></textarea>
+        <textarea id="srSteps" placeholder="One step per line" required rows="4"></textarea>
+        <button type="submit" class="btn btn-gold">Submit for Review</button>
+        <p class="auth-hint" id="submitStatus"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════ TOAST ═══════════════ -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

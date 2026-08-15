@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FlavorNest — Admin Dashboard</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  body { padding: 40px 20px; max-width: 1000px; margin: 0 auto; }
+  .admin-card { background: rgba(253,246,236,.05); border: 1px solid rgba(253,246,236,.12); border-radius: 16px; padding: 24px; margin-bottom: 24px; }
+  .admin-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-box { background: rgba(253,246,236,.06); border-radius: 12px; padding: 18px; text-align: center; }
+  .stat-num { font-family: var(--font-display); font-size: 2rem; color: var(--gold); }
+  .stat-label { font-size: .78rem; opacity: .7; text-transform: uppercase; letter-spacing: .05em; }
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid rgba(253,246,236,.1); }
+  th { opacity: .6; text-transform: uppercase; font-size: .72rem; letter-spacing: .05em; }
+  .pending-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(253,246,236,.1); }
+  .pending-actions button { margin-left: 8px; }
+  .order-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(253,246,236,.1); gap: 12px; flex-wrap: wrap; }
+  .order-row select { background: rgba(253,246,236,.06); border: 1px solid rgba(253,246,236,.18); color: var(--cream); border-radius: 6px; padding: 6px 10px; font-family: inherit; }
+  #loginGate { max-width: 400px; margin: 100px auto; text-align: center; }
+  #loginGate input { display: block; width: 100%; margin-bottom: 12px; padding: 12px; border-radius: 8px; border: 1px solid rgba(253,246,236,.2); background: rgba(253,246,236,.06); color: var(--cream); font-family: inherit; }
+</style>
+</head>
+<body>
+
+<div id="loginGate">
+  <h2 style="font-family:var(--font-display); margin-bottom: 20px;">🍜 Admin Login</h2>
+  <input type="email" id="adminEmail" placeholder="Admin email" />
+  <input type="password" id="adminPassword" placeholder="Password" />
+  <button class="btn btn-gold" id="adminLoginBtn" style="width:100%;">Log In</button>
+  <p style="opacity:.6; font-size:.8rem; margin-top:12px;">Demo: admin@flavornest.com / admin123</p>
+</div>
+
+<div id="dashboard" style="display:none;">
+  <h1 style="font-family:var(--font-display); margin-bottom: 24px;">📊 FlavorNest Analytics</h1>
+
+  <div class="admin-grid" id="statsGrid"></div>
+
+  <div class="admin-card">
+    <h3>Recipes by Cuisine</h3>
+    <table id="cuisineTable"><thead><tr><th>Cuisine</th><th>Recipes</th><th>Avg Rating</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <div class="admin-card">
+    <h3>Most Viewed</h3>
+    <table id="viewedTable"><thead><tr><th>Recipe</th><th>Views</th><th>Favorites</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <div class="admin-card">
+    <h3>Top Rated</h3>
+    <table id="ratedTable"><thead><tr><th>Recipe</th><th>Rating</th><th>Reviews</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <div class="admin-card">
+    <h3>Best Sellers (Recipe Kits)</h3>
+    <table id="bestSellersTable"><thead><tr><th>Recipe</th><th>Units Sold</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <div class="admin-card">
+    <h3>Recent Orders</h3>
+    <div id="ordersList"></div>
+  </div>
+
+</div>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Orders — FlavorNest</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  body { padding: 100px 20px 60px; max-width: 900px; margin: 0 auto; }
+  .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+  .top-bar a { color: var(--gold); text-decoration: none; font-weight: 600; }
+  .order-card {
+    background: rgba(253,246,236,.05);
+    border: 1px solid rgba(253,246,236,.12);
+    border-radius: 16px;
+    padding: 22px 24px;
+    margin-bottom: 20px;
+  }
+  .order-head { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  .order-id { font-size: .78rem; opacity: .55; }
+  .order-total { font-family: var(--font-display); font-size: 1.3rem; color: var(--gold); }
+  .status-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+  .status-placed { background: #37474f; color: #fff; }
+  .status-preparing { background: #e65100; color: #fff; }
+  .status-out_for_delivery { background: #1565c0; color: #fff; }
+  .status-delivered { background: #2e7d32; color: #fff; }
+  .status-cancelled { background: #7f1d1d; color: #fff; }
+
+  .timeline { display: flex; gap: 6px; margin: 16px 0; flex-wrap: wrap; }
+  .timeline-step {
+    flex: 1;
+    min-width: 90px;
+    text-align: center;
+    font-size: .68rem;
+    opacity: .4;
+    padding-bottom: 8px;
+    border-bottom: 3px solid rgba(253,246,236,.15);
+  }
+  .timeline-step.done { opacity: 1; border-color: var(--gold); color: var(--gold); font-weight: 700; }
+
+  .order-items { font-size: .85rem; opacity: .85; margin-bottom: 12px; }
+  .order-items div { padding: 4px 0; }
+  .order-actions a, .order-actions button {
+    font-size: .8rem;
+    margin-right: 10px;
+  }
+  .empty-state { text-align: center; padding: 60px 20px; opacity: .6; }
+</style>
+</head>
+<body>
+  <div class="top-bar">
+    <h1 style="font-family:var(--font-display);">📦 My Orders</h1>
+    <a href="index.html">← Back to FlavorNest</a>
+  </div>
+
+  <div id="ordersList"></div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="script-orders.js"></script>
+</body>
+</html>
