@@ -2,3 +2,4 @@
 node_modules/
 **/.DS_StoreFlight-Price-Forecasting/.venv/
 Flight-Price-Forecasting/.venv/
+.DS_Store
