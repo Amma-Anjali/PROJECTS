@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<div class="page-heading">
+  <h1>For You</h1>
+  <p class="page-sub">Based on the categories you follow</p>
+</div>
+
+<% if (!hasInterests) { %>
+  <div class="empty-state">
+    <h2>You haven't picked any interests yet</h2>
+    <p><a href="/profile" class="btn btn-primary" style="display:inline-flex;margin-top:0.5rem;">Choose interests</a></p>
+  </div>
+<% } else if (articles.length === 0) { %>
+  <div class="empty-state">
+    <h2>No articles in your interests yet</h2>
+    <p>Run <code>npm run seed</code> to pull in fresh articles.</p>
+  </div>
+<% } else { %>
+  <div class="story-grid">
+    <% articles.forEach(function(article) { %>
+      <%- include('partials/articleCard', { article: article }) %>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

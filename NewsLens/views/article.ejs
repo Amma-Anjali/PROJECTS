@@ -1,0 +1,82 @@
+<%- include('partials/header') %>
+
+<article>
+  <div class="article-header">
+    <span class="category-tag" data-cat="<%= article.category.toLowerCase() %>"><%= article.category %></span>
+    <h1><%= article.title %></h1>
+    <span class="meta-line"><%= article.source %> &middot; Published <%= article.timeAgo %> &middot; <%= article.readingTime %> min read</span>
+  </div>
+
+  <% if (article.image) { %>
+  <div class="article-hero">
+    <img src="<%= article.image %>" alt="" referrerpolicy="no-referrer"
+      onerror="this.closest('.article-hero').style.display='none'">
+  </div>
+  <% } %>
+
+  <div class="article-body">
+    <p><%= article.description %></p>
+
+    <div class="ai-panel">
+      <div class="ai-panel-heading">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.6L19.5 9l-5.7 1.4L12 16l-1.8-5.6L4.5 9l5.7-1.4L12 2z"/></svg>
+        AI SUMMARY
+      </div>
+      <% if (summary && summary.summary) { %>
+        <p><%= summary.summary %></p>
+        <% if (summary.keyPoints && summary.keyPoints.length) { %>
+          <div class="ai-panel-heading">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            KEY POINTS
+          </div>
+          <ul>
+            <% summary.keyPoints.forEach(function(point) { %>
+              <li><%= point %></li>
+            <% }) %>
+          </ul>
+        <% } %>
+      <% } else { %>
+        <p class="ai-unavailable">
+          <%= (summary && summary.failureReason) ? summary.failureReason : "We couldn't generate a summary right now. The article itself is still below." %>
+        </p>
+      <% } %>
+    </div>
+
+    <div class="ai-reader-panel" id="aiReader" data-article-id="<%= article._id %>">
+      <div class="ai-panel-heading">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 8h10M7 12h6"/><path d="M9 18v2M15 18v2"/></svg>
+        AI READER
+      </div>
+      <p class="meta-line" style="margin-bottom:0.3rem;">Read this article in your language, then listen to it.</p>
+      <div class="reader-lang-tabs">
+        <% languageOptions.forEach(function(opt, i) { %>
+          <button type="button" class="lang-tab <%= i === 0 ? 'active' : '' %>"
+            data-lang="<%= opt.code %>" data-label="<%= opt.label %>" data-speech="<%= opt.speech %>">
+            <%= opt.label %>
+          </button>
+        <% }) %>
+      </div>
+      <div class="reader-body" id="readerBody">
+        <p class="reader-placeholder">Choose a language above to generate an AI-read version of this article.</p>
+      </div>
+    </div>
+
+    <div class="source-box">
+      <span class="meta-line">Original source: <strong><%= article.source %></strong></span>
+      <a href="<%= article.url %>" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        Read Original Article
+      </a>
+    </div>
+
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+      <form action="<%= article.isSaved ? `/saved/${article._id}/remove` : `/saved/${article._id}` %>" method="post">
+        <button type="submit" class="save-btn <%= article.isSaved ? 'saved' : '' %>" style="margin-top:0.5rem;">
+          <svg viewBox="0 0 24 24" fill="<%= article.isSaved ? 'currentColor' : 'none' %>" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21 12 16.5 5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <%= article.isSaved ? 'Saved' : 'Save this article' %>
+        </button>
+      </form>
+    <% } %>
+  </div>
+</article>
+
+<%- include('partials/footer') %>

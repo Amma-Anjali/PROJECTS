@@ -1,0 +1,22 @@
+<article class="story-card">
+  <a href="/news/<%= article._id %>" class="story-media">
+    <% if (article.image) { %>
+      <img src="<%= article.image %>" alt="" loading="lazy" referrerpolicy="no-referrer"
+        onerror="this.closest('.story-media').style.display='none'">
+    <% } %>
+  </a>
+  <span class="category-tag" data-cat="<%= article.category.toLowerCase() %>"><%= article.category %></span>
+  <h3><a href="/news/<%= article._id %>"><%= article.title %></a></h3>
+  <p class="desc"><%= article.description %></p>
+  <div class="story-footer">
+    <span class="meta-line"><%= article.source %> &middot; <%= article.timeAgo %> &middot; <%= article.readingTime %> min read</span>
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+      <form action="<%= article.isSaved ? `/saved/${article._id}/remove` : `/saved/${article._id}` %>" method="post">
+        <button type="submit" class="save-btn <%= article.isSaved ? 'saved' : '' %>">
+          <svg viewBox="0 0 24 24" fill="<%= article.isSaved ? 'currentColor' : 'none' %>" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21 12 16.5 5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <%= article.isSaved ? 'Saved' : 'Save' %>
+        </button>
+      </form>
+    <% } %>
+  </div>
+</article>

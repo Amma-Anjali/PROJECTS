@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+
+<div class="page-heading">
+  <h1>Recently Read</h1>
+  <p class="page-sub">Your last 20 viewed articles</p>
+</div>
+
+<% if (!articles || articles.length === 0) { %>
+  <div class="empty-state">
+    <h2>No reading history yet</h2>
+    <p>Articles you open will show up here.</p>
+  </div>
+<% } else { %>
+  <div class="story-grid">
+    <% articles.forEach(function(article) { %>
+      <%- include('partials/articleCard', { article: article }) %>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

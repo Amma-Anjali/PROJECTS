@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<div class="page-heading">
+  <h1>Search</h1>
+  <% if (query) { %>
+    <p class="page-sub">Results for "<%= query %>"</p>
+  <% } %>
+</div>
+
+<% if (!query) { %>
+  <div class="empty-state">
+    <h2>Search for something</h2>
+    <p>Try a topic, company, or keyword.</p>
+  </div>
+<% } else if (articles.length === 0) { %>
+  <div class="empty-state">
+    <h2>No articles found for "<%= query %>"</h2>
+    <p>Try a different search term.</p>
+  </div>
+<% } else { %>
+  <div class="story-grid">
+    <% articles.forEach(function(article) { %>
+      <%- include('partials/articleCard', { article: article }) %>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

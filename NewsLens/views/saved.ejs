@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+
+<div class="page-heading">
+  <h1>Saved Articles</h1>
+</div>
+
+<% if (!articles || articles.length === 0) { %>
+  <div class="empty-state">
+    <h2>No saved articles yet</h2>
+    <p>Tap "Save" on any story to keep it here.</p>
+  </div>
+<% } else { %>
+  <div class="story-grid">
+    <% articles.forEach(function(article) { %>
+      <%- include('partials/articleCard', { article: article }) %>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+
+<div class="page-heading">
+  <h1>Trending</h1>
+  <p class="page-sub">Ranked by recency, clicks, and saves from the last 3 days</p>
+</div>
+
+<% if (!articles || articles.length === 0) { %>
+  <div class="empty-state">
+    <h2>Nothing trending right now</h2>
+    <p>Check back once there's more recent activity.</p>
+  </div>
+<% } else { %>
+  <div class="story-grid">
+    <% articles.forEach(function(article) { %>
+      <%- include('partials/articleCard', { article: article }) %>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

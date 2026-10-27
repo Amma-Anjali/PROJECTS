@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<div class="form-page" style="max-width:460px;">
+  <h1>Your interests</h1>
+  <p class="page-sub" style="margin-bottom:1rem;">
+    Pick the categories you care about - they drive your "For You" feed.
+  </p>
+
+  <form action="/profile/interests" method="post">
+    <div class="interest-grid">
+      <% allCategories.forEach(function(cat) { %>
+        <label class="interest-option">
+          <input type="checkbox" name="interests" value="<%= cat %>"
+            <%= user.interests.includes(cat) ? 'checked' : '' %>>
+          <%= cat.charAt(0).toUpperCase() + cat.slice(1) %>
+        </label>
+      <% }) %>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Save interests</button>
+  </form>
+
+  <p class="form-footnote">Logged in as <%= user.name %> (<%= user.email %>)</p>
+</div>
+
+<%- include('partials/footer') %>
